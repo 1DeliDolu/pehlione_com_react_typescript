@@ -1,8 +1,16 @@
+import { Outlet } from "react-router-dom";
+
+import { Footer } from "./components/layout/Footer";
+import { Header } from "./components/layout/Header";
+import { Navigation } from "./components/layout/Navigation";
+
 export function App() {
   return (
-    <main>
-      <h1>Pehlione</h1>
-      <p>React + TypeScript + Vite frontend initialized.</p>
-    </main>
+    <div className="site-shell">
+      <Header />
+      <Navigation />
+      <Outlet />
+      <Footer />
+    </div>
   );
 }
