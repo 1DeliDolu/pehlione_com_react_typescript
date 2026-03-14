@@ -26,12 +26,14 @@ export function VerifyEmailPage() {
         });
         if (!cancelled) {
           setState("success");
-          setMessage(res.data.message ?? "E-posta adresiniz dogrulandi.");
+          setMessage(
+            res.data.message ?? "Your email address has been verified.",
+          );
         }
       } catch (error) {
         if (!cancelled) {
           setState("error");
-          setMessage(getApiErrorMessage(error, "Dogrulama basarisiz oldu."));
+          setMessage(getApiErrorMessage(error, "Verification failed."));
         }
       }
     }
@@ -45,46 +47,46 @@ export function VerifyEmailPage() {
   return (
     <RouteSection
       eyebrow="Verification"
-      title="E-posta dogrulama"
+      title="Email verification"
       description={
         state === "idle"
-          ? "Dogrulama baglantisi bulunamadi. Lutfen e-postanizdaki linki kullanin."
+          ? "No verification link found. Please use the link from your email."
           : state === "loading"
-            ? "Token dogrulaniyor..."
+            ? "Verifying token..."
             : message
       }
     >
       <section className="route-panel">
         {state === "success" && (
           <>
-            <p className="feature-card__kicker">Basarili</p>
-            <p>E-posta adresiniz dogrulandi. Artik giris yapabilirsiniz.</p>
+            <p className="feature-card__kicker">Success</p>
+            <p>Your email address has been verified. You can now sign in.</p>
             <Link className="button button--primary" to="/login">
-              Giris yap
+              Sign in
             </Link>
           </>
         )}
 
         {state === "error" && (
           <>
-            <p className="feature-card__kicker">Hata</p>
+            <p className="feature-card__kicker">Error</p>
             <p>{message}</p>
             <p>
-              Token suresi dolmus veya gecersiz olabilir. Yeni bir dogrulama
-              e-postasi istemek icin giris yapin.
+              The token may have expired or is invalid. Sign in to request a new
+              verification email.
             </p>
           </>
         )}
 
         {state === "idle" && (
           <>
-            <p className="feature-card__kicker">Token bulunamadi</p>
+            <p className="feature-card__kicker">Token not found</p>
             <p>
-              E-posta adresinize gonderilen dogrulama baglantisindan erismeli
-              veya kayit olunuz.
+              Please access through the verification link sent to your email
+              address or register.
             </p>
             <Link className="button button--secondary" to="/register">
-              Kayit ol
+              Register
             </Link>
           </>
         )}

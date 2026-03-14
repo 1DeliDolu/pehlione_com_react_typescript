@@ -4,8 +4,8 @@ export function SettingsPage() {
   return (
     <RouteSection
       eyebrow="Admin area"
-      title="Settings route sistem yapilandirmalarini ayirir."
-      description="Policy ayarlari, operational config ve genel admin tercihleri bu sayfaya konur."
+      title="Settings route separates system configurations."
+      description="Policy settings, operational config and general admin preferences are placed on this page."
       actions={["Security policy", "Feature flags", "Operational defaults"]}
     />
   );

@@ -54,9 +54,14 @@ export function UserDetailPage() {
   return (
     <RouteSection
       eyebrow="Admin area"
-      title="User detail route tekil yonetim islemlerini ayirir."
-      description="Bu sayfa artik `/admin/users/:userId` verisini cekiyor ve rol/plan/status aksiyonlari gonderiyor."
-      actions={["Profile data", "Session history", "Tier update", "Disable account"]}
+      title="User detail route separates individual management operations."
+      description="This page now fetches data from `/admin/users/:userId` and sends role/plan/status actions."
+      actions={[
+        "Profile data",
+        "Session history",
+        "Tier update",
+        "Disable account",
+      ]}
     >
       <section className="route-panel">
         <p className="feature-card__kicker">User snapshot</p>
@@ -64,19 +69,22 @@ export function UserDetailPage() {
           loading={userQuery.isLoading}
           error={
             userQuery.error
-              ? getApiErrorMessage(userQuery.error, "Kullanici detayi okunamadi.")
+              ? getApiErrorMessage(
+                  userQuery.error,
+                  "Failed to load user details.",
+                )
               : null
           }
         />
         {user ? (
           <KeyValueList
             items={[
-              { label: "Ad", value: user.firstName },
-              { label: "Soyad", value: user.lastName },
-              { label: "E-posta", value: user.email },
-              { label: "Rol", value: user.role },
+              { label: "First name", value: user.firstName },
+              { label: "Last name", value: user.lastName },
+              { label: "Email", value: user.email },
+              { label: "Role", value: user.role },
               { label: "Plan", value: user.membershipTier },
-              { label: "Durum", value: user.isActive ? "Active" : "Disabled" },
+              { label: "Status", value: user.isActive ? "Active" : "Disabled" },
             ]}
           />
         ) : null}
@@ -84,7 +92,7 @@ export function UserDetailPage() {
       <section className="route-panel">
         <p className="feature-card__kicker">Management actions</p>
         {actionError ? (
-          <p>{getApiErrorMessage(actionError, "Yonetim aksiyonu basarisiz.")}</p>
+          <p>{getApiErrorMessage(actionError, "Management action failed.")}</p>
         ) : null}
         <div className="admin-actions">
           <button

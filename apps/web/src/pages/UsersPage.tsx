@@ -56,17 +56,17 @@ export function UsersPage() {
   return (
     <RouteSection
       eyebrow="Admin area"
-      title="Kullanici yonetimi"
-      description="Arama, filtre ve sayfalama ile kullanici listesi."
+      title="User management"
+      description="User list with search, filters and pagination."
     >
       {/* ── Filters ─────────────────────────────────────── */}
       <section className="route-panel">
-        <p className="feature-card__kicker">Filtreler</p>
+        <p className="feature-card__kicker">Filters</p>
         <div className="filter-bar">
           <input
             className="filter-bar__input"
             type="text"
-            placeholder="Isim veya e-posta ile ara..."
+            placeholder="Search by name or email..."
             value={params.search ?? ""}
             onChange={(e) => setFilter("search", e.target.value)}
           />
@@ -75,7 +75,7 @@ export function UsersPage() {
             value={params.role ?? ""}
             onChange={(e) => setFilter("role", e.target.value)}
           >
-            <option value="">Tum roller</option>
+            <option value="">All roles</option>
             {Object.values(Role).map((r) => (
               <option key={r} value={r}>
                 {r}
@@ -87,7 +87,7 @@ export function UsersPage() {
             value={params.membershipTier ?? ""}
             onChange={(e) => setFilter("membershipTier", e.target.value)}
           >
-            <option value="">Tum tierler</option>
+            <option value="">All tiers</option>
             {Object.values(MembershipTier).map((t) => (
               <option key={t} value={t}>
                 {t}
@@ -105,9 +105,9 @@ export function UsersPage() {
             }
             onChange={(e) => setFilter("isActive", e.target.value)}
           >
-            <option value="">Tum durum</option>
-            <option value="true">Aktif</option>
-            <option value="false">Pasif</option>
+            <option value="">All statuses</option>
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
           </select>
         </div>
       </section>
@@ -115,7 +115,7 @@ export function UsersPage() {
       {/* ── User list ───────────────────────────────────── */}
       <section className="route-panel">
         <p className="feature-card__kicker">
-          Kullanicilar{meta ? ` (${meta.total} sonuc)` : ""}
+          Users{meta ? ` (${meta.total} results)` : ""}
         </p>
         <DataState
           loading={usersQuery.isLoading}
@@ -123,12 +123,12 @@ export function UsersPage() {
             usersQuery.error
               ? getApiErrorMessage(
                   usersQuery.error,
-                  "Kullanici listesi okunamadi.",
+                  "Failed to load user list.",
                 )
               : null
           }
           empty={!users.length}
-          emptyMessage="Filtreye uygun kullanici bulunamadi."
+          emptyMessage="No users matching the filter."
         />
         {users.length > 0 && (
           <ul className="session-list">
@@ -148,7 +148,7 @@ export function UsersPage() {
                   className="button button--secondary"
                   to={`/admin/users/${user.id}`}
                 >
-                  Detay
+                  Details
                 </Link>
               </li>
             ))}
@@ -164,10 +164,10 @@ export function UsersPage() {
               disabled={params.page === 1}
               onClick={() => setFilter("page", String((params.page ?? 1) - 1))}
             >
-              Onceki
+              Previous
             </button>
             <span className="pagination__info">
-              Sayfa {params.page ?? 1} /{" "}
+              Page {params.page ?? 1} /{" "}
               {Math.ceil(meta.total / (params.limit ?? 20))}
             </span>
             <button
@@ -176,7 +176,7 @@ export function UsersPage() {
               disabled={(params.page ?? 1) * (params.limit ?? 20) >= meta.total}
               onClick={() => setFilter("page", String((params.page ?? 1) + 1))}
             >
-              Sonraki
+              Next
             </button>
           </div>
         )}
