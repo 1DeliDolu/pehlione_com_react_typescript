@@ -57,9 +57,7 @@ export const getUserController: RequestHandler = async (req, res, next) => {
 
 export const changeRoleController: RequestHandler = async (req, res, next) => {
   try {
-    const { role } = z
-      .object({ role: z.nativeEnum(RoleEnum) })
-      .parse(req.body);
+    const { role } = z.object({ role: z.nativeEnum(RoleEnum) }).parse(req.body);
     await adminChangeRole(req, req.params.userId, role as Role);
     res.json({ success: true, message: "Role updated" });
   } catch (err) {
@@ -72,7 +70,11 @@ export const changeTierController: RequestHandler = async (req, res, next) => {
     const { membershipTier } = z
       .object({ membershipTier: z.nativeEnum(TierEnum) })
       .parse(req.body);
-    await adminChangeTier(req, req.params.userId, membershipTier as MembershipTier);
+    await adminChangeTier(
+      req,
+      req.params.userId,
+      membershipTier as MembershipTier,
+    );
     res.json({ success: true, message: "Membership tier updated" });
   } catch (err) {
     next(err);

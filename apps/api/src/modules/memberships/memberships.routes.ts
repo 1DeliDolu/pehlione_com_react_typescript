@@ -21,7 +21,8 @@ const getFeaturesController: RequestHandler = async (req, res, next) => {
     const entitlements = await getEntitlementsByTier(tier);
     const features = entitlements.map((e) => ({
       featureKey: e.featureKey,
-      name: (e as Record<string, unknown> & { feature?: { name: string } }).feature?.name,
+      name: (e as Record<string, unknown> & { feature?: { name: string } })
+        .feature?.name,
       limitValue: e.limitValue,
       isEnabled: e.isEnabled,
     }));
