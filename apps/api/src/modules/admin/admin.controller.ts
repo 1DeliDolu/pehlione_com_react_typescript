@@ -8,7 +8,6 @@ import {
   adminEnableUser,
 } from "../users/users.service.js";
 import { findAuditLogs } from "../audit/audit.repository.js";
-import { AppError } from "../../middlewares/errorHandler.js";
 import type { Role, MembershipTier } from "@pehlione/shared";
 import { Role as RoleEnum, MembershipTier as TierEnum } from "@pehlione/shared";
 import { z } from "zod";
@@ -48,7 +47,7 @@ export const listUsersController: RequestHandler = async (req, res, next) => {
 
 export const getUserController: RequestHandler = async (req, res, next) => {
   try {
-    const data = await adminGetUser(req.params.userId);
+    const data = await adminGetUser(req.params.userId as string);
     res.json({ success: true, data });
   } catch (err) {
     next(err);
@@ -58,7 +57,7 @@ export const getUserController: RequestHandler = async (req, res, next) => {
 export const changeRoleController: RequestHandler = async (req, res, next) => {
   try {
     const { role } = z.object({ role: z.nativeEnum(RoleEnum) }).parse(req.body);
-    await adminChangeRole(req, req.params.userId, role as Role);
+    await adminChangeRole(req, req.params.userId as string, role as Role);
     res.json({ success: true, message: "Role updated" });
   } catch (err) {
     next(err);
@@ -72,7 +71,7 @@ export const changeTierController: RequestHandler = async (req, res, next) => {
       .parse(req.body);
     await adminChangeTier(
       req,
-      req.params.userId,
+      req.params.userId as string,
       membershipTier as MembershipTier,
     );
     res.json({ success: true, message: "Membership tier updated" });
@@ -83,7 +82,7 @@ export const changeTierController: RequestHandler = async (req, res, next) => {
 
 export const disableUserController: RequestHandler = async (req, res, next) => {
   try {
-    await adminDisableUser(req, req.params.userId);
+    await adminDisableUser(req, req.params.userId as string);
     res.json({ success: true, message: "User disabled" });
   } catch (err) {
     next(err);
@@ -92,7 +91,7 @@ export const disableUserController: RequestHandler = async (req, res, next) => {
 
 export const enableUserController: RequestHandler = async (req, res, next) => {
   try {
-    await adminEnableUser(req, req.params.userId);
+    await adminEnableUser(req, req.params.userId as string);
     res.json({ success: true, message: "User enabled" });
   } catch (err) {
     next(err);

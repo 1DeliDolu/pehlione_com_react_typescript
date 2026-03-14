@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { AuthStatusPanel } from "../auth/AuthStatusPanel";
+
 const stats = [
   { value: "3 katman", label: "public, user, admin" },
   { value: "4 guard", label: "auth, role, tier, feature" },
@@ -20,10 +22,11 @@ export function Header() {
           <Link className="button button--primary" to="/pricing">
             Planlari incele
           </Link>
-          <Link className="button button--secondary" to="/dashboard">
-            Dashboard akisini gor
+          <Link className="button button--secondary" to="/analytics">
+            Guard akisini gor
           </Link>
         </div>
+        <AuthStatusPanel />
       </div>
 
       <div className="hero__panel" aria-label="Platform ozeti">

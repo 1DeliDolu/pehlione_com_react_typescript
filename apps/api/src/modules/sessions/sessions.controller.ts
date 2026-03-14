@@ -29,7 +29,7 @@ export const revokeSessionController: RequestHandler = async (
   next,
 ) => {
   try {
-    await revokeSession(req, req.params.sessionId);
+    await revokeSession(req, req.params.sessionId as string);
     res.json({ success: true, message: "Session revoked" });
   } catch (err) {
     next(err);

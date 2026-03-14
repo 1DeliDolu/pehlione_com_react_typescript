@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { authenticate } from "../../middlewares/authenticate.js";
 import { setCsrfToken, verifyCsrfToken } from "../../middlewares/csrf.js";
+import { loginRateLimit } from "../../middlewares/loginRateLimit.js";
 import {
   registerController,
   registerValidator,
@@ -21,13 +22,26 @@ import {
 export const authRouter = Router();
 
 authRouter.get("/csrf-token", setCsrfToken, csrfController);
-authRouter.post("/register", verifyCsrfToken, registerValidator, registerController);
-authRouter.post("/login", verifyCsrfToken, loginValidator, loginController);
+authRouter.post(
+  "/register",
+  loginRateLimit,
+  verifyCsrfToken,
+  registerValidator,
+  registerController,
+);
+authRouter.post(
+  "/login",
+  loginRateLimit,
+  verifyCsrfToken,
+  loginValidator,
+  loginController,
+);
 authRouter.post("/logout", authenticate, logoutController);
 authRouter.get("/me", authenticate, meController);
 authRouter.get("/verify-email", verifyEmailValidator, verifyEmailController);
 authRouter.post(
   "/forgot-password",
+  loginRateLimit,
   verifyCsrfToken,
   forgotPasswordValidator,
   forgotPasswordController,

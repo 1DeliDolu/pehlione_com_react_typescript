@@ -4,6 +4,7 @@ const navSections = [
   { title: "Home", to: "/" },
   { title: "Pricing", to: "/pricing" },
   { title: "Dashboard", to: "/dashboard" },
+  { title: "Analytics", to: "/analytics" },
   { title: "Admin", to: "/admin" },
   { title: "Login", to: "/login" },
 ];

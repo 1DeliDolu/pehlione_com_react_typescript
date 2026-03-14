@@ -1,4 +1,5 @@
 import type { AuditAction } from "@pehlione/shared";
+import type { Prisma } from "@prisma/client";
 
 import { prisma } from "../../lib/prisma.js";
 
@@ -15,7 +16,9 @@ export interface CreateAuditLogInput {
 export async function createAuditLog(
   input: CreateAuditLogInput,
 ): Promise<void> {
-  await prisma.auditLog.create({ data: input });
+  await prisma.auditLog.create({
+    data: input as Prisma.AuditLogUncheckedCreateInput,
+  });
 }
 
 export async function findAuditLogs(opts: {

@@ -1,6 +1,6 @@
 import type { Request } from "express";
 
-import { AuditAction } from "@pehlione/shared";
+import { AuditAction, type Role, type MembershipTier } from "@pehlione/shared";
 import { AppError } from "../../middlewares/errorHandler.js";
 import { hashPassword, verifyPassword } from "../../lib/password.js";
 import { generateToken, hashToken } from "../../lib/token.js";
@@ -87,8 +87,8 @@ export async function login(
   });
 
   req.session.userId = user.id;
-  req.session.role = user.role;
-  req.session.membershipTier = user.membershipTier;
+  req.session.role = user.role as Role;
+  req.session.membershipTier = user.membershipTier as MembershipTier;
 
   await repo.updateUser(user.id, { lastLoginAt: new Date() });
   await logAction(req, AuditAction.LOGIN_SUCCEEDED, "user", user.id);
