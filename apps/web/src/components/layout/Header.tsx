@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const stats = [
   { value: "3 katman", label: "public, user, admin" },
   { value: "4 guard", label: "auth, role, tier, feature" },
@@ -15,12 +17,12 @@ export function Header() {
           alanlari icin buyumeye uygun bir giris katmani hazirlandi.
         </p>
         <div className="hero__actions">
-          <a className="button button--primary" href="#main-content">
-            Frontend yapisini incele
-          </a>
-          <a className="button button--secondary" href="#footer">
-            Yol haritasini gor
-          </a>
+          <Link className="button button--primary" to="/pricing">
+            Planlari incele
+          </Link>
+          <Link className="button button--secondary" to="/dashboard">
+            Dashboard akisini gor
+          </Link>
         </div>
       </div>
 

@@ -110,7 +110,7 @@ select {
   margin: 0;
 }
 
-.top-nav__links a {
+.top-nav__link {
   display: inline-flex;
   align-items: center;
   min-height: 40px;
@@ -181,8 +181,13 @@ select {
 }
 
 .button:hover,
-.top-nav__links a:hover {
+.top-nav__link:hover {
   transform: translateY(-1px);
+}
+
+.top-nav__link.is-active {
+  background: #102033;
+  color: #f8f4ea;
 }
 
 .button--primary {
@@ -235,10 +240,33 @@ select {
 }
 
 .section-intro,
+.route-panel,
 .site-footer {
   padding: 28px;
   border-radius: 28px;
   background: var(--surface);
+}
+
+.route-panel {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill-list__item {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(201, 111, 45, 0.14);
+  color: #5d2d0f;
 }
 
 .content-grid {
@@ -293,6 +321,22 @@ select {
   max-width: 360px;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(16, 32, 51, 0.08);
+}
+
 @media (max-width: 960px) {
   .hero,
   .guard-strip,
@@ -315,6 +359,7 @@ select {
   .top-nav,
   .hero,
   .section-intro,
+  .route-panel,
   .feature-card,
   .guard-strip,
   .site-footer {
