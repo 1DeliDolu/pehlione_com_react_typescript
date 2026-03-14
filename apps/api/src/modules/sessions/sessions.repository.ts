@@ -52,7 +52,8 @@ export async function deleteAllUserSessions(
     if (!raw) continue;
     try {
       const data = JSON.parse(raw) as SessionPayload;
-      if (data.userId === userId) await redis.del(`${SESSION_PREFIX}${sessionId}`);
+      if (data.userId === userId)
+        await redis.del(`${SESSION_PREFIX}${sessionId}`);
     } catch {
       // ignore
     }
