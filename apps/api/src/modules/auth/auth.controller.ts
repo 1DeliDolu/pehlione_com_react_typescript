@@ -15,10 +15,7 @@ export const registerValidator = validate(registerSchema);
 export const loginValidator = validate(loginSchema);
 export const forgotPasswordValidator = validate(forgotPasswordSchema);
 export const resetPasswordValidator = validate(resetPasswordSchema);
-export const verifyEmailValidator = validate(
-  verifyEmailSchema,
-  "query",
-);
+export const verifyEmailValidator = validate(verifyEmailSchema, "query");
 
 export async function registerController(
   req: Request,
@@ -29,8 +26,7 @@ export async function registerController(
     const user = await authService.register(req, req.body);
     res.status(201).json({
       success: true,
-      message:
-        "Kayıt başarılı. Lütfen e-posta adresinizi doğrulayın.",
+      message: "Kayıt başarılı. Lütfen e-posta adresinizi doğrulayın.",
       data: {
         id: user.id,
         email: user.email,
@@ -146,7 +142,9 @@ export async function resetPasswordController(
 ): Promise<void> {
   try {
     await authService.resetPassword(req, req.body.token, req.body.password);
-    res.status(200).json({ success: true, message: "Şifre başarıyla güncellendi" });
+    res
+      .status(200)
+      .json({ success: true, message: "Şifre başarıyla güncellendi" });
   } catch (err) {
     next(err);
   }
