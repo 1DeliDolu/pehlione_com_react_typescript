@@ -5,23 +5,23 @@ export function AdminDashboardPage() {
   return (
     <RouteSection
       eyebrow="Admin area"
-      title="Admin dashboard route yonetim merkezini ayirir."
-      description="Role bazli kontrol ile audit, users ve system settings modullerine giris bu sayfadan saglanir."
+      title="Admin dashboard serves as the central management hub."
+      description="Access to audit, users and system settings modules is provided from this page via role-based control."
       actions={["System health", "Recent audits", "Pending actions"]}
     >
       <InfoGrid
         cards={[
           {
             title: "Access",
-            text: "Bu alan RequireRole('ADMIN') ve permission kontrolu ile korunacak.",
+            text: "This area is protected by RequireRole('ADMIN') and permission checks.",
           },
           {
             title: "Operations",
-            text: "Kritik yonetim aksiyonlari backend audit kaydina baglanmali.",
+            text: "Critical management actions should be linked to backend audit logs.",
           },
           {
             title: "Overview",
-            text: "Users, mail ve membership yonetimi icin hizli giris kartlari burada yer alir.",
+            text: "Quick access cards for users, mail and membership management are placed here.",
           },
         ]}
       />

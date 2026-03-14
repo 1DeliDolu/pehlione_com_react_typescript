@@ -25,7 +25,7 @@ export function RegisterPage() {
   const mutation = useMutation({
     mutationFn: registerMutation,
     onSuccess: (result) => {
-      setStatusMessage(result.message ?? "Kayit tamamlandi.");
+      setStatusMessage(result.message ?? "Registration completed.");
       form.reset();
     },
   });
@@ -33,50 +33,57 @@ export function RegisterPage() {
   return (
     <RouteSection
       eyebrow="Auth"
-      title="Register sayfasi bagimsiz route olarak hazir."
-      description="Uyelik olusturma formu artik dogrudan register endpoint'ine bagli."
+      title="Register page is ready as an independent route."
+      description="Account creation form is now directly connected to the register endpoint."
     >
       <AuthFormShell
         title="Account creation"
-        description="Kayit sonrasi verify-email akisi backend tarafindan tetiklenir."
+        description="After registration, the verify-email flow is triggered by the backend."
         statusMessage={statusMessage}
         errorMessage={
           mutation.error
-            ? getApiErrorMessage(mutation.error, "Kayit islemi basarisiz.")
+            ? getApiErrorMessage(mutation.error, "Registration failed.")
             : null
         }
       >
-        <form className="auth-form" onSubmit={form.handleSubmit((values) => mutation.mutate(values))}>
+        <form
+          className="auth-form"
+          onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
+        >
           <div className="auth-form__grid">
             <FormField
-              label="Ad"
+              label="First name"
               autoComplete="given-name"
               {...form.register("firstName")}
               error={form.formState.errors.firstName?.message}
             />
             <FormField
-              label="Soyad"
+              label="Last name"
               autoComplete="family-name"
               {...form.register("lastName")}
               error={form.formState.errors.lastName?.message}
             />
           </div>
           <FormField
-            label="E-posta"
+            label="Email"
             type="email"
             autoComplete="email"
             {...form.register("email")}
             error={form.formState.errors.email?.message}
           />
           <FormField
-            label="Sifre"
+            label="Password"
             type="password"
             autoComplete="new-password"
             {...form.register("password")}
             error={form.formState.errors.password?.message}
           />
-          <button className="button button--primary" type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "Kayit olusturuluyor" : "Register"}
+          <button
+            className="button button--primary"
+            type="submit"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? "Creating account" : "Register"}
           </button>
         </form>
       </AuthFormShell>

@@ -7,8 +7,8 @@ import { Navigation } from "./components/layout/Navigation";
 export function App() {
   return (
     <div className="site-shell">
-      <Header />
       <Navigation />
+      <Header />
       <Outlet />
       <Footer />
     </div>

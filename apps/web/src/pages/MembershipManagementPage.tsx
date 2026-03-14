@@ -4,8 +4,8 @@ export function MembershipManagementPage() {
   return (
     <RouteSection
       eyebrow="Admin area"
-      title="Membership management route plan operasyonlarini toplar."
-      description="Tier degisimi, entitlement denetimi ve plan gecmisi yonetimi bu alan uzerinden ilerler."
+      title="Membership management route gathers plan operations."
+      description="Tier changes, entitlement audits and plan history management proceed through this area."
       actions={["Tier update", "Entitlement review", "Plan history"]}
     />
   );

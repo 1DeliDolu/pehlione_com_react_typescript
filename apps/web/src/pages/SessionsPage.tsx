@@ -31,8 +31,8 @@ export function SessionsPage() {
   return (
     <RouteSection
       eyebrow="User area"
-      title="Sessions route aktif cihazlari gosterir."
-      description="Bu sayfa artik `/sessions` listesini cekiyor ve revoke aksiyonlari gonderiyor."
+      title="Sessions route shows active devices."
+      description="This page now fetches the `/sessions` list and sends revoke actions."
       actions={["Current session", "Other devices", "Revoke action"]}
     >
       <section className="route-panel">
@@ -44,29 +44,40 @@ export function SessionsPage() {
             onClick={() => revokeAll.mutate()}
             disabled={revokeAll.isPending}
           >
-            {revokeAll.isPending ? "Temizleniyor" : "Diger sessionlari kapat"}
+            {revokeAll.isPending ? "Clearing" : "Revoke other sessions"}
           </button>
         </div>
-        {sessionsQuery.isLoading ? <p>Session listesi yukleniyor.</p> : null}
+        {sessionsQuery.isLoading ? <p>Loading sessions.</p> : null}
         {sessionsQuery.error ? (
-          <p>{getApiErrorMessage(sessionsQuery.error, "Session verisi okunamadi.")}</p>
+          <p>
+            {getApiErrorMessage(
+              sessionsQuery.error,
+              "Failed to load session data.",
+            )}
+          </p>
         ) : null}
         {revokeOne.error ? (
-          <p>{getApiErrorMessage(revokeOne.error, "Session kapatilamadi.")}</p>
+          <p>
+            {getApiErrorMessage(revokeOne.error, "Failed to revoke session.")}
+          </p>
         ) : null}
         {revokeAll.error ? (
-          <p>{getApiErrorMessage(revokeAll.error, "Sessionlar kapatilamadi.")}</p>
+          <p>
+            {getApiErrorMessage(revokeAll.error, "Failed to revoke sessions.")}
+          </p>
         ) : null}
         <ul className="session-list">
           {(sessionsQuery.data ?? []).map((session) => (
             <li key={session.sessionId} className="session-card">
               <div>
-                <strong>{session.isCurrent ? "Current device" : "Known device"}</strong>
+                <strong>
+                  {session.isCurrent ? "Current device" : "Known device"}
+                </strong>
                 <p>{session.sessionId}</p>
                 <small>
                   {session.createdAt
-                    ? new Date(session.createdAt).toLocaleString("tr-TR")
-                    : "Tarih yok"}
+                    ? new Date(session.createdAt).toLocaleString("en-US")
+                    : "No date"}
                 </small>
               </div>
               {!session.isCurrent ? (

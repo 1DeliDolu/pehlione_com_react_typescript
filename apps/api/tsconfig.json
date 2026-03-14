@@ -5,7 +5,6 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "dist",
-    "rootDir": "src",
     "allowJs": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
@@ -13,7 +12,11 @@
     "strict": true,
     "noEmitOnError": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@pehlione/shared": ["../../packages/shared/src/index.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules"]

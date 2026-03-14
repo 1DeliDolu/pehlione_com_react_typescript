@@ -6,23 +6,23 @@ export function AnalyticsPage() {
   return (
     <RouteSection
       eyebrow="Advanced feature"
-      title="Analytics route tier ve feature guard altinda."
-      description={`Bu sayfa ancak ${FEATURES.ANALYTICS_ADVANCED} entitlement'i olan kullanicilar tarafindan gorulebilir.`}
+      title="Analytics route is under tier and feature guard."
+      description={`This page is only visible to users with the ${FEATURES.ANALYTICS_ADVANCED} entitlement.`}
       actions={["Trend cards", "Advanced charts", "CSV export handoff"]}
     >
       <InfoGrid
         cards={[
           {
             title: "Tier gate",
-            text: "Silver ve Gold uyeler bu ekrana gecebilir.",
+            text: "Silver and Gold members can access this screen.",
           },
           {
             title: "Feature gate",
-            text: "Entitlement dogrulamasi frontend'de UX, backend'de ise guvenlik icin tekrar enforce edilir.",
+            text: "Entitlement verification is enforced on frontend for UX and on backend for security.",
           },
           {
             title: "Next integration",
-            text: "TanStack Query ile analytics endpoint'leri bu route'ta consume edilebilir.",
+            text: "Analytics endpoints can be consumed on this route via TanStack Query.",
           },
         ]}
       />

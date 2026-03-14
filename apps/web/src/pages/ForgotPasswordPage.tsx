@@ -25,7 +25,7 @@ export function ForgotPasswordPage() {
   const mutation = useMutation({
     mutationFn: forgotPasswordMutation,
     onSuccess: (result) => {
-      setStatusMessage(result.message ?? "Reset maili tetiklendi.");
+      setStatusMessage(result.message ?? "Reset email triggered.");
       form.reset();
     },
   });
@@ -33,29 +33,36 @@ export function ForgotPasswordPage() {
   return (
     <RouteSection
       eyebrow="Recovery"
-      title="Forgot password akisi icin ozel route."
-      description="Password reset istegi artik backend endpoint'ine bagli."
+      title="Dedicated route for the forgot password flow."
+      description="Password reset request is now connected to backend endpoint."
     >
       <AuthFormShell
         title="Password recovery"
-        description="Sistem, e-posta kayitliysa reset mailini gonderir; degilse de ayni basari cevabini verir."
+        description="The system sends a reset email if the address is registered; otherwise it returns the same success response."
         statusMessage={statusMessage}
         errorMessage={
           mutation.error
-            ? getApiErrorMessage(mutation.error, "Reset maili gonderilemedi.")
+            ? getApiErrorMessage(mutation.error, "Failed to send reset email.")
             : null
         }
       >
-        <form className="auth-form" onSubmit={form.handleSubmit((values) => mutation.mutate(values))}>
+        <form
+          className="auth-form"
+          onSubmit={form.handleSubmit((values) => mutation.mutate(values))}
+        >
           <FormField
-            label="E-posta"
+            label="Email"
             type="email"
             autoComplete="email"
             {...form.register("email")}
             error={form.formState.errors.email?.message}
           />
-          <button className="button button--primary" type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "Gonderiliyor" : "Reset linki iste"}
+          <button
+            className="button button--primary"
+            type="submit"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? "Sending" : "Request reset link"}
           </button>
         </form>
       </AuthFormShell>

@@ -4,8 +4,8 @@ export function ForbiddenPage() {
   return (
     <RouteSection
       eyebrow="Access denied"
-      title="Bu alan rol yetkisi gerektiriyor."
-      description="Frontend route guard seni burada durdurdu. Gercek uygulamada backend ayni kontrolu tekrar enforce etmeli."
+      title="This area requires role authorization."
+      description="The frontend route guard stopped you here. In a real application the backend should enforce the same check."
       actions={["Role mismatch", "Admin permission required"]}
     />
   );

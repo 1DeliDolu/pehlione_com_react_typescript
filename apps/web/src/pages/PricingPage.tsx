@@ -4,17 +4,17 @@ import { RouteSection } from "../components/routes/RouteSection";
 const cards = [
   {
     title: "Bronze",
-    text: "Temel erisim ve baslangic seviyesinde urun ozellikleri.",
+    text: "Basic access and entry-level product features.",
     items: ["Basic analytics", "Core dashboard", "Single-user access"],
   },
   {
     title: "Silver",
-    text: "Buyuyen kullanicilar icin daha fazla capability ve limit.",
+    text: "More capabilities and higher limits for growing users.",
     items: ["Advanced reports", "Export CSV", "Higher usage limits"],
   },
   {
     title: "Gold",
-    text: "Operasyonel takimlar ve premium destek gereksinimleri icin.",
+    text: "For operational teams and premium support requirements.",
     items: ["Priority support", "Team invites", "Expanded entitlements"],
   },
 ];
@@ -23,8 +23,8 @@ export function PricingPage() {
   return (
     <RouteSection
       eyebrow="Plans"
-      title="Membership tier ekranlari artik ayri route altinda."
-      description="Role ile tier ayrimini koruyacak bicimde plan anlatimi, haklar ve limitler burada sunulabilir."
+      title="Membership tier screens are now under separate routes."
+      description="Plan descriptions, entitlements and limits can be presented here while maintaining the role-tier separation."
     >
       <InfoGrid cards={cards} />
     </RouteSection>

@@ -223,6 +223,11 @@ select {
   justify-items: end;
 }
 
+.auth-status-copy p {
+  margin: 0;
+  text-align: right;
+}
+
 .chip {
   min-height: 38px;
   padding: 0 14px;
@@ -407,6 +412,12 @@ select {
   background: rgba(16, 32, 51, 0.05);
 }
 
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -542,6 +553,10 @@ select {
     justify-items: start;
   }
 
+  .auth-status-copy p {
+    text-align: left;
+  }
+
   .top-nav__links {
     width: 100%;
   }
@@ -550,4 +565,46 @@ select {
   .top-nav__link {
     width: 100%;
   }
+}
+
+/* ── Filter bar ──────────────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.filter-bar__input {
+  flex: 1 1 200px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.filter-bar__select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* ── Pagination ──────────────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pagination__info {
+  font-size: 0.875rem;
+  color: var(--text-muted, #888);
 }

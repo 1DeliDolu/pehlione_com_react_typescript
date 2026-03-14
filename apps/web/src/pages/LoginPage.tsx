@@ -37,7 +37,7 @@ export function LoginPage() {
   const mutation = useMutation({
     mutationFn: loginMutation,
     onSuccess: async () => {
-      setStatusMessage("Login basarili. Session yenileniyor.");
+      setStatusMessage("Login successful. Refreshing session.");
       await queryClient.invalidateQueries({ queryKey: queryKeys.authMe });
       navigate(redirectTarget, { replace: true });
     },
@@ -48,36 +48,40 @@ export function LoginPage() {
   return (
     <RouteSection
       eyebrow="Auth"
-      title="Login ekrani icin ayrilmis route."
-      description={`Form, CSRF ve session tabanli giris akisina baglanacak alan burada konumlanir. Basarili login sonrasi hedef: ${redirectTarget}.`}
+      title="Dedicated route for the login screen."
+      description={`The form and CSRF/session-based login flow is located here. Redirect target after successful login: ${redirectTarget}.`}
     >
       <AuthFormShell
         title="Session login"
-        description="Kullanici girisi backend session ve httpOnly cookie ile tamamlanir."
+        description="User login is completed with backend session and httpOnly cookie."
         statusMessage={statusMessage}
         errorMessage={
           mutation.error
-            ? getApiErrorMessage(mutation.error, "Login islemi basarisiz.")
+            ? getApiErrorMessage(mutation.error, "Login failed.")
             : null
         }
       >
         <form className="auth-form" onSubmit={onSubmit}>
           <FormField
-            label="E-posta"
+            label="Email"
             type="email"
             autoComplete="email"
             {...form.register("email")}
             error={form.formState.errors.email?.message}
           />
           <FormField
-            label="Sifre"
+            label="Password"
             type="password"
             autoComplete="current-password"
             {...form.register("password")}
             error={form.formState.errors.password?.message}
           />
-          <button className="button button--primary" type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "Giris yapiliyor" : "Login"}
+          <button
+            className="button button--primary"
+            type="submit"
+            disabled={mutation.isPending}
+          >
+            {mutation.isPending ? "Signing in" : "Login"}
           </button>
         </form>
       </AuthFormShell>
