@@ -1,0 +1,190 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum MembershipTier {
+  BRONZE
+  SILVER
+  GOLD
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum AuditAction {
+  USER_CREATED
+  USER_UPDATED
+  USER_DELETED
+  LOGIN_SUCCEEDED
+  LOGIN_FAILED
+  LOGOUT_SUCCEEDED
+  PASSWORD_RESET_REQUESTED
+  PASSWORD_RESET_COMPLETED
+  EMAIL_VERIFICATION_SENT
+  EMAIL_VERIFIED
+  MEMBERSHIP_TIER_UPDATED
+  ROLE_UPDATED
+  SESSION_REVOKED
+  ACCOUNT_DISABLED
+  ACCOUNT_ENABLED
+  PASSWORD_CHANGED
+}
+
+model User {
+  id                        String               @id @default(cuid())
+  email                     String               @unique @db.VarChar(191)
+  passwordHash              String               @db.VarChar(255)
+  firstName                 String               @db.VarChar(100)
+  lastName                  String               @db.VarChar(100)
+  role                      Role                 @default(USER)
+  membershipTier            MembershipTier       @default(BRONZE)
+  isEmailVerified           Boolean              @default(false)
+  isActive                  Boolean              @default(true)
+  lastLoginAt               DateTime?
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+
+  emailVerificationTokens   EmailVerificationToken[]
+  passwordResetTokens       PasswordResetToken[]
+  auditLogs                 AuditLog[]           @relation("AuditActor")
+  userSessions              UserSession[]
+  userMemberships           UserMembership[]
+
+  @@index([role])
+  @@index([membershipTier])
+  @@index([isActive])
+  @@map("users")
+}
+
+model EmailVerificationToken {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique @db.VarChar(255)
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("email_verification_tokens")
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique @db.VarChar(255)
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
+
+model UserSession {
+  id           String    @id @default(cuid())
+  userId       String
+  sessionId    String    @unique @db.VarChar(255)
+  ipAddress    String?   @db.VarChar(45)
+  userAgent    String?   @db.VarChar(500)
+  lastActiveAt DateTime  @default(now())
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("user_sessions")
+}
+
+model UserMembership {
+  id        String           @id @default(cuid())
+  userId    String
+  tier      MembershipTier
+  status    MembershipStatus @default(ACTIVE)
+  startedAt DateTime         @default(now())
+  endedAt   DateTime?
+  createdAt DateTime         @default(now())
+
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("user_memberships")
+}
+
+model Permission {
+  id              String           @id @default(cuid())
+  name            String           @unique @db.VarChar(191)
+  description     String?          @db.VarChar(500)
+  createdAt       DateTime         @default(now())
+
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id             String     @id @default(cuid())
+  role           Role
+  permissionName String     @db.VarChar(191)
+  createdAt      DateTime   @default(now())
+
+  permission     Permission @relation(fields: [permissionName], references: [name], onDelete: Cascade)
+
+  @@unique([role, permissionName])
+  @@index([role])
+  @@map("role_permissions")
+}
+
+model FeatureEntitlement {
+  id        String         @id @default(cuid())
+  tier      MembershipTier
+  feature   String         @db.VarChar(191)
+  value     String         @db.VarChar(500)
+  createdAt DateTime       @default(now())
+
+  @@unique([tier, feature])
+  @@index([tier])
+  @@map("feature_entitlements")
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  actorUserId String?
+  action      AuditAction
+  entityType  String      @db.VarChar(100)
+  entityId    String?     @db.VarChar(191)
+  ipAddress   String?     @db.VarChar(45)
+  userAgent   String?     @db.VarChar(1000)
+  metadata    Json?
+  createdAt   DateTime    @default(now())
+
+  actorUser   User?       @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

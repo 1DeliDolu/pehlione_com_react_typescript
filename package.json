@@ -1,0 +1,33 @@
+{
+  "name": "pehlione-com",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --delay 3000 --names api,web --prefix-colors cyan,green \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": "npm run dev -w @pehlione/api",
+    "dev:web": "npm run dev -w @pehlione/web",
+    "build": "npm run build -w @pehlione/api && npm run build -w @pehlione/web",
+    "build:api": "npm run build -w @pehlione/api",
+    "build:web": "npm run build -w @pehlione/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "prisma:generate": "npm run prisma:generate -w @pehlione/api",
+    "prisma:migrate:dev": "npm run prisma:migrate:dev -w @pehlione/api",
+    "prisma:migrate:deploy": "npm run prisma:migrate:deploy -w @pehlione/api",
+    "prisma:studio": "npm run prisma:studio -w @pehlione/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=10.0.0"
+  }
+}
