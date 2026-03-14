@@ -204,6 +204,9 @@ packages/shared/src/
 |------|-------|
 | Admin email | `admin@pehlione.com` |
 | Admin password | `Admin1234!` |
+| Gold user | `gold@pehlione.local` / `D0cker!` |
+| Silver user | `silver@pehlione.local` / `D0cker!` |
+| Bronze user | `bronze@pehlione.local` / `D0cker!` |
 | Permissions | 6 (users:read/write/delete, audit:read, roles:write, memberships:write) |
 | Feature entitlements | 12 (8 features × 3 tiers) |
 

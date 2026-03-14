@@ -24,7 +24,7 @@ export async function register(
 ) {
   const existing = await repo.findUserByEmail(input.email);
   if (existing) {
-    throw new AppError(409, "Bu e-posta adresi zaten kayıtlı");
+    throw new AppError(409, "This email address is already registered");
   }
 
   const passwordHash = await hashPassword(input.password);
@@ -63,14 +63,14 @@ export async function login(
       email: input.email,
       reason: "user_not_found",
     });
-    throw new AppError(401, "E-posta veya şifre hatalı");
+    throw new AppError(401, "Invalid email or password");
   }
 
   if (!user.isActive) {
     await logAction(req, AuditAction.LOGIN_FAILED, "user", user.id, {
       reason: "account_disabled",
     });
-    throw new AppError(403, "Hesabınız devre dışı bırakıldı");
+    throw new AppError(403, "Your account has been disabled");
   }
 
   const valid = await verifyPassword(user.passwordHash, input.password);
@@ -78,7 +78,7 @@ export async function login(
     await logAction(req, AuditAction.LOGIN_FAILED, "user", user.id, {
       reason: "invalid_password",
     });
-    throw new AppError(401, "E-posta veya şifre hatalı");
+    throw new AppError(401, "Invalid email or password");
   }
 
   // Rotate session after login
@@ -127,11 +127,11 @@ export async function verifyEmail(req: Request, token: string) {
   if (!record || record.usedAt !== null) {
     throw new AppError(
       400,
-      "Bu doğrulama bağlantısı geçersiz veya kullanılmış",
+      "This verification link is invalid or has already been used",
     );
   }
   if (record.expiresAt < new Date()) {
-    throw new AppError(400, "Doğrulama bağlantısının süresi dolmuş");
+    throw new AppError(400, "Verification link has expired");
   }
 
   await Promise.all([
@@ -171,16 +171,16 @@ export async function resetPassword(
   if (!record || record.usedAt !== null) {
     throw new AppError(
       400,
-      "Bu şifre sıfırlama bağlantısı geçersiz veya kullanılmış",
+      "This password reset link is invalid or has already been used",
     );
   }
   if (record.expiresAt < new Date()) {
-    throw new AppError(400, "Şifre sıfırlama bağlantısının süresi dolmuş");
+    throw new AppError(400, "Password reset link has expired");
   }
 
   const user = await repo.findUserById(record.userId);
   if (!user || !user.isActive) {
-    throw new AppError(400, "Kullanıcı bulunamadı");
+    throw new AppError(400, "User not found");
   }
 
   const passwordHash = await hashPassword(newPassword);

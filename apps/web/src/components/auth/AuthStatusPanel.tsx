@@ -35,13 +35,13 @@ export function AuthStatusPanel() {
       <div className="auth-status-copy">
         <p>
           {errorMessage
-            ? "API baglantisi kurulamadi veya session okunamadi."
+            ? "Could not connect to API or read session."
             : user
-              ? `${user.firstName} ${user.lastName} olarak oturum acik.`
-              : "Protected route'lar login olmadan login ekranina yonlenir."}
+              ? `Signed in as ${user.firstName} ${user.lastName}.`
+              : "Protected routes redirect to the login screen without authentication."}
         </p>
         {mutation.error ? (
-          <p>{getApiErrorMessage(mutation.error, "Logout islemi basarisiz.")}</p>
+          <p>{getApiErrorMessage(mutation.error, "Logout failed.")}</p>
         ) : null}
         {user ? (
           <button
@@ -50,7 +50,7 @@ export function AuthStatusPanel() {
             onClick={() => mutation.mutate()}
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "Cikis yapiliyor" : "Logout"}
+            {mutation.isPending ? "Logging out" : "Logout"}
           </button>
         ) : null}
       </div>

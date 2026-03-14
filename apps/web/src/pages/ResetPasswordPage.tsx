@@ -3,7 +3,7 @@ import { resetPasswordSchema, type ResetPasswordInput } from "@pehlione/shared";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 import { resetPasswordMutation } from "../auth/auth.mutations";
 import { AuthFormShell } from "../components/forms/AuthFormShell";

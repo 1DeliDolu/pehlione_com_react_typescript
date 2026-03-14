@@ -40,6 +40,80 @@ async function main() {
 
   console.log(`✅  Admin user: ${admin.email} (id: ${admin.id})`);
 
+  // ── 1.1 Membership demo users ────────────────────────────────────────────
+  const seededUsers = [
+    {
+      email: "gold@pehlione.local",
+      firstName: "Gold",
+      lastName: "User",
+      membershipTier: "GOLD" as const,
+    },
+    {
+      email: "silver@pehlione.local",
+      firstName: "Silver",
+      lastName: "User",
+      membershipTier: "SILVER" as const,
+    },
+    {
+      email: "bronze@pehlione.local",
+      firstName: "Bronze",
+      lastName: "User",
+      membershipTier: "BRONZE" as const,
+    },
+  ];
+
+  const seededUserPasswordHash = await argon2.hash("D0cker!", {
+    type: argon2.argon2id,
+    memoryCost: 65536,
+    timeCost: 3,
+    parallelism: 4,
+  });
+
+  for (const seededUser of seededUsers) {
+    const user = await prisma.user.upsert({
+      where: { email: seededUser.email },
+      update: {
+        firstName: seededUser.firstName,
+        lastName: seededUser.lastName,
+        membershipTier: seededUser.membershipTier,
+        isEmailVerified: true,
+        isActive: true,
+      },
+      create: {
+        email: seededUser.email,
+        passwordHash: seededUserPasswordHash,
+        firstName: seededUser.firstName,
+        lastName: seededUser.lastName,
+        role: "USER",
+        membershipTier: seededUser.membershipTier,
+        isEmailVerified: true,
+        isActive: true,
+      },
+    });
+
+    const activeMembership = await prisma.userMembership.findFirst({
+      where: { userId: user.id, status: "ACTIVE" },
+      orderBy: { startedAt: "desc" },
+    });
+
+    if (activeMembership?.tier !== seededUser.membershipTier) {
+      await prisma.userMembership.updateMany({
+        where: { userId: user.id, status: "ACTIVE" },
+        data: { status: "EXPIRED", endedAt: new Date() },
+      });
+
+      await prisma.userMembership.create({
+        data: {
+          userId: user.id,
+          tier: seededUser.membershipTier,
+          status: "ACTIVE",
+        },
+      });
+    }
+
+    console.log(`✅  Seed user: ${user.email} (${seededUser.membershipTier})`);
+  }
+
   // ── 2. Permissions ────────────────────────────────────────────────────────
   const permissions = [
     { name: "users:read", description: "View user list" },

@@ -1,5 +1,5 @@
 import type { Feature } from "@pehlione/shared";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 import { GuardNotice } from "../components/auth/GuardNotice";
@@ -11,8 +11,8 @@ export function RequireFeature({ feature }: { feature: Feature }) {
     return (
       <GuardNotice
         actionLabel="Feature check"
-        title="Entitlement kontrolu yapiliyor."
-        description="Ozellik bazli erisim karari session ve tier verisi geldikten sonra verilir."
+        title="Checking entitlement."
+        description="Feature-based access decision is made after session and tier data are received."
       />
     );
   }
@@ -21,8 +21,8 @@ export function RequireFeature({ feature }: { feature: Feature }) {
     return (
       <GuardNotice
         actionLabel="Feature check failed"
-        title="Entitlement bilgisi alinamadi."
-        description="API hatasi nedeniyle feature guard karar veremedi."
+        title="Could not retrieve entitlement information."
+        description="Feature guard could not make a decision due to an API error."
       />
     );
   }

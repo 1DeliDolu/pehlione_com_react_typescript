@@ -12,15 +12,15 @@ export async function sendVerificationEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: "E-posta adresinizi doğrulayın",
+    subject: "Verify your email address",
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Hesabınızı doğrulamak için aşağıdaki bağlantıya tıklayın:</p>
-      <a href="${link}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;">E-postayı Doğrula</a>
-      <p>Bu bağlantı 24 saat geçerlidir.</p>
-      <p>Eğer bu isteği siz yapmadıysanız bu e-postayı görmezden gelebilirsiniz.</p>
+      <h2>Hello ${name},</h2>
+      <p>Click the link below to verify your account:</p>
+      <a href="${link}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;">Verify Email</a>
+      <p>This link is valid for 24 hours.</p>
+      <p>If you did not make this request, you can safely ignore this email.</p>
     `,
-    text: `Hesabınızı doğrulamak için bu bağlantıya gidin: ${link}`,
+    text: `Verify your account by visiting this link: ${link}`,
   });
 }
 
@@ -33,15 +33,15 @@ export async function sendPasswordResetEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: "Şifre sıfırlama isteği",
+    subject: "Password reset request",
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Şifrenizi sıfırlamak için aşağıdaki bağlantıya tıklayın:</p>
-      <a href="${link}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;">Şifremi Sıfırla</a>
-      <p>Bu bağlantı 1 saat geçerlidir.</p>
-      <p>Eğer bu isteği siz yapmadıysanız şifreniz değiştirilmeyecektir.</p>
+      <h2>Hello ${name},</h2>
+      <p>Click the link below to reset your password:</p>
+      <a href="${link}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:#fff;border-radius:6px;text-decoration:none;">Reset Password</a>
+      <p>This link is valid for 1 hour.</p>
+      <p>If you did not make this request, your password will not be changed.</p>
     `,
-    text: `Şifrenizi sıfırlamak için bu bağlantıya gidin: ${link}`,
+    text: `Reset your password by visiting this link: ${link}`,
   });
 }
 
@@ -52,13 +52,13 @@ export async function sendPasswordChangedEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: "Şifreniz değiştirildi",
+    subject: "Your password has been changed",
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Hesabınızın şifresi başarıyla değiştirildi.</p>
-      <p>Bu değişikliği siz yapmadıysanız lütfen hemen desteğe başvurun.</p>
+      <h2>Hello ${name},</h2>
+      <p>Your account password has been successfully changed.</p>
+      <p>If you did not make this change, please contact support immediately.</p>
     `,
-    text: `Hesabınızın şifresi değiştirildi. Siz yapmadıysanız destek ile iletişime geçin.`,
+    text: `Your account password has been changed. If this wasn't you, please contact support.`,
   });
 }
 
@@ -69,13 +69,13 @@ export async function sendWelcomeEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: `Hoş geldiniz, ${name}!`,
+    subject: `Welcome, ${name}!`,
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Pehlione'a hoş geldiniz! Hesabınız başarıyla oluşturuldu.</p>
-      <p>Başlamak için e-posta adresinizi doğrulamayı unutmayın.</p>
+      <h2>Hello ${name},</h2>
+      <p>Welcome to Pehlione! Your account has been created successfully.</p>
+      <p>Don't forget to verify your email address to get started.</p>
     `,
-    text: `Merhaba ${name}, Pehlione'a hoş geldiniz!`,
+    text: `Hello ${name}, welcome to Pehlione!`,
   });
 }
 
@@ -87,13 +87,13 @@ export async function sendMembershipUpgradedEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: "Üyelik planınız güncellendi",
+    subject: "Your membership plan has been updated",
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Üyelik planınız <strong>${newTier}</strong> olarak güncellendi.</p>
-      <p>Yeni özelliklerinizi keşfetmek için hesabınıza giriş yapın.</p>
+      <h2>Hello ${name},</h2>
+      <p>Your membership plan has been updated to <strong>${newTier}</strong>.</p>
+      <p>Sign in to your account to explore your new features.</p>
     `,
-    text: `Üyelik planınız ${newTier} olarak güncellendi.`,
+    text: `Your membership plan has been updated to ${newTier}.`,
   });
 }
 
@@ -104,12 +104,12 @@ export async function sendAccountDisabledEmail(
   await getMailTransporter().sendMail({
     from: FROM,
     to,
-    subject: "Hesabınız devre dışı bırakıldı",
+    subject: "Your account has been disabled",
     html: `
-      <h2>Merhaba ${name},</h2>
-      <p>Hesabınız yönetici tarafından devre dışı bırakıldı.</p>
-      <p>Daha fazla bilgi için destek ekibimizle iletişime geçin.</p>
+      <h2>Hello ${name},</h2>
+      <p>Your account has been disabled by an administrator.</p>
+      <p>Please contact our support team for more information.</p>
     `,
-    text: `Hesabınız devre dışı bırakıldı. Destek ile iletişime geçin.`,
+    text: `Your account has been disabled. Please contact support.`,
   });
 }

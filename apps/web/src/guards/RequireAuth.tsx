@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 import { GuardNotice } from "../components/auth/GuardNotice";
@@ -11,8 +11,8 @@ export function RequireAuth() {
     return (
       <GuardNotice
         actionLabel="Session loading"
-        title="Session durumu dogrulaniyor."
-        description="Protected route acilmadan once /auth/me ve CSRF verisi okunuyor."
+        title="Verifying session status."
+        description="Reading /auth/me and CSRF data before opening the protected route."
       />
     );
   }
@@ -21,8 +21,8 @@ export function RequireAuth() {
     return (
       <GuardNotice
         actionLabel="Auth unavailable"
-        title="Session servisine ulasilamadi."
-        description="API ayagini ve VITE_API_BASE_URL ayarini kontrol et. Guard bu durumda kullaniciyi gecirmiyor."
+        title="Could not reach the session service."
+        description="Check the API server and VITE_API_BASE_URL setting. The guard does not allow the user through in this state."
       />
     );
   }
@@ -41,8 +41,8 @@ export function RequireAuth() {
     return (
       <GuardNotice
         actionLabel="Inactive account"
-        title="Bu hesap aktif degil."
-        description="Kullanici aktif olmadan protected route'lara erisim verilmez."
+        title="This account is inactive."
+        description="Access to protected routes is not granted while the user is inactive."
       />
     );
   }

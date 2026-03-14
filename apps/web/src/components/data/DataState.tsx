@@ -9,10 +9,10 @@ export function DataState({
   loading,
   error,
   empty,
-  emptyMessage = "Kayit bulunamadi.",
+  emptyMessage = "No records found.",
 }: DataStateProps) {
   if (loading) {
-    return <p>Veri yukleniyor.</p>;
+    return <p>Loading data.</p>;
   }
 
   if (error) {

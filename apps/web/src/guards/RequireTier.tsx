@@ -1,5 +1,5 @@
 import type { MembershipTier } from "@pehlione/shared";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 import { GuardNotice } from "../components/auth/GuardNotice";
@@ -11,8 +11,8 @@ export function RequireTier({ tiers }: { tiers: MembershipTier[] }) {
     return (
       <GuardNotice
         actionLabel="Tier check"
-        title="Membership tier kontrolu yapiliyor."
-        description="Kullanici plan bilgisi gelmeden protected feature resolve edilmiyor."
+        title="Checking membership tier."
+        description="Protected features are not resolved until the user plan data is received."
       />
     );
   }
@@ -21,8 +21,8 @@ export function RequireTier({ tiers }: { tiers: MembershipTier[] }) {
     return (
       <GuardNotice
         actionLabel="Tier check failed"
-        title="Membership bilgisi alinamadi."
-        description="API hatasi nedeniyle tier guard karar veremedi."
+        title="Could not retrieve membership information."
+        description="Tier guard could not make a decision due to an API error."
       />
     );
   }

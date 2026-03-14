@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { FEATURES, MembershipTier, Role } from "@pehlione/shared";
-import { createBrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router";
 
 import { App } from "./App";
 import { RequireAuth } from "./guards/RequireAuth";
@@ -76,91 +76,87 @@ const SettingsPage = lazy(() =>
 
 // ── Shared suspense fallback ─────────────────────────────────────────────────
 function RouteFallback() {
-  return <p style={{ padding: "2rem", textAlign: "center" }}>Yukleniyor…</p>;
+  return <p style={{ padding: "2rem", textAlign: "center" }}>Loading…</p>;
 }
 
 function withSuspense(element: React.ReactNode) {
   return <Suspense fallback={<RouteFallback />}>{element}</Suspense>;
 }
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    children: [
-      // ── Public ───────────────────────────────────────
-      { index: true, element: <HomePage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
-      { path: "forgot-password", element: <ForgotPasswordPage /> },
-      { path: "reset-password", element: <ResetPasswordPage /> },
-      { path: "verify-email", element: <VerifyEmailPage /> },
-      { path: "pricing", element: <PricingPage /> },
-      { path: "forbidden", element: <ForbiddenPage /> },
-      { path: "upgrade-required", element: <UpgradeRequiredPage /> },
-      { path: "feature-unavailable", element: <FeatureUnavailablePage /> },
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<App />}>
+        {/* ── Public ─────────────────────────────────── */}
+        <Route index element={<HomePage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="reset-password" element={<ResetPasswordPage />} />
+        <Route path="verify-email" element={<VerifyEmailPage />} />
+        <Route path="pricing" element={<PricingPage />} />
+        <Route path="forbidden" element={<ForbiddenPage />} />
+        <Route path="upgrade-required" element={<UpgradeRequiredPage />} />
+        <Route
+          path="feature-unavailable"
+          element={<FeatureUnavailablePage />}
+        />
 
-      // ── Authenticated ────────────────────────────────
-      {
-        element: <RequireAuth />,
-        children: [
-          { path: "dashboard", element: withSuspense(<DashboardPage />) },
-          { path: "profile", element: withSuspense(<ProfilePage />) },
-          { path: "security", element: withSuspense(<SecurityPage />) },
-          { path: "sessions", element: withSuspense(<SessionsPage />) },
-          { path: "membership", element: withSuspense(<MembershipPage />) },
-          {
-            path: "notifications",
-            element: withSuspense(<NotificationsPage />),
-          },
-          {
-            element: (
+        {/* ── Authenticated ──────────────────────────── */}
+        <Route element={<RequireAuth />}>
+          <Route path="dashboard" element={withSuspense(<DashboardPage />)} />
+          <Route path="profile" element={withSuspense(<ProfilePage />)} />
+          <Route path="security" element={withSuspense(<SecurityPage />)} />
+          <Route path="sessions" element={withSuspense(<SessionsPage />)} />
+          <Route path="membership" element={withSuspense(<MembershipPage />)} />
+          <Route
+            path="notifications"
+            element={withSuspense(<NotificationsPage />)}
+          />
+          <Route
+            element={
               <RequireTier
                 tiers={[MembershipTier.SILVER, MembershipTier.GOLD]}
               />
-            ),
-            children: [
-              {
-                element: (
-                  <RequireFeature feature={FEATURES.ANALYTICS_ADVANCED} />
-                ),
-                children: [
-                  {
-                    path: "analytics",
-                    element: withSuspense(<AnalyticsPage />),
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
+            }
+          >
+            <Route
+              element={<RequireFeature feature={FEATURES.ANALYTICS_ADVANCED} />}
+            >
+              <Route
+                path="analytics"
+                element={withSuspense(<AnalyticsPage />)}
+              />
+            </Route>
+          </Route>
+        </Route>
 
-      // ── Admin ────────────────────────────────────────
-      {
-        element: <RequireRole role={Role.ADMIN} />,
-        children: [
-          { path: "admin", element: withSuspense(<AdminDashboardPage />) },
-          { path: "admin/users", element: withSuspense(<UsersPage />) },
-          {
-            path: "admin/users/:userId",
-            element: withSuspense(<UserDetailPage />),
-          },
-          {
-            path: "admin/membership-management",
-            element: withSuspense(<MembershipManagementPage />),
-          },
-          {
-            path: "admin/audit-logs",
-            element: withSuspense(<AuditLogsPage />),
-          },
-          {
-            path: "admin/mail-templates",
-            element: withSuspense(<MailTemplatesPage />),
-          },
-          { path: "admin/settings", element: withSuspense(<SettingsPage />) },
-        ],
-      },
-    ],
-  },
-]);
+        {/* ── Admin ──────────────────────────────────── */}
+        <Route element={<RequireRole role={Role.ADMIN} />}>
+          <Route path="admin" element={withSuspense(<AdminDashboardPage />)} />
+          <Route path="admin/users" element={withSuspense(<UsersPage />)} />
+          <Route
+            path="admin/users/:userId"
+            element={withSuspense(<UserDetailPage />)}
+          />
+          <Route
+            path="admin/membership-management"
+            element={withSuspense(<MembershipManagementPage />)}
+          />
+          <Route
+            path="admin/audit-logs"
+            element={withSuspense(<AuditLogsPage />)}
+          />
+          <Route
+            path="admin/mail-templates"
+            element={withSuspense(<MailTemplatesPage />)}
+          />
+          <Route
+            path="admin/settings"
+            element={withSuspense(<SettingsPage />)}
+          />
+        </Route>
+      </Route>
+    </Routes>
+  );
+}

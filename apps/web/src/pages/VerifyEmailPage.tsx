@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router";
 
 import { apiClient } from "../lib/api";
 import type { ApiResponse } from "@pehlione/shared";

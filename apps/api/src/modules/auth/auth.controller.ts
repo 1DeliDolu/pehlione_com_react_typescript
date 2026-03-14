@@ -26,7 +26,7 @@ export async function registerController(
     const user = await authService.register(req, req.body);
     res.status(201).json({
       success: true,
-      message: "Kayıt başarılı. Lütfen e-posta adresinizi doğrulayın.",
+      message: "Registration successful. Please verify your email address.",
       data: {
         id: user.id,
         email: user.email,
@@ -71,7 +71,7 @@ export async function logoutController(
   try {
     await authService.logout(req);
     res.clearCookie("pehlione.sid");
-    res.status(200).json({ success: true, message: "Çıkış başarılı" });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
   } catch (err) {
     next(err);
   }
@@ -112,7 +112,7 @@ export async function verifyEmailController(
 ): Promise<void> {
   try {
     await authService.verifyEmail(req, req.query["token"] as string);
-    res.status(200).json({ success: true, message: "E-posta doğrulandı" });
+    res.status(200).json({ success: true, message: "Email verified" });
   } catch (err) {
     next(err);
   }
@@ -128,7 +128,7 @@ export async function forgotPasswordController(
     res.status(200).json({
       success: true,
       message:
-        "E-posta adresiniz kayıtlıysa şifre sıfırlama bağlantısı gönderildi",
+        "If your email is registered, a password reset link has been sent",
     });
   } catch (err) {
     next(err);
@@ -144,7 +144,7 @@ export async function resetPasswordController(
     await authService.resetPassword(req, req.body.token, req.body.password);
     res
       .status(200)
-      .json({ success: true, message: "Şifre başarıyla güncellendi" });
+      .json({ success: true, message: "Password updated successfully" });
   } catch (err) {
     next(err);
   }

@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { AuthStatusPanel } from "../auth/AuthStatusPanel";
 
 const stats = [
-  { value: "3 katman", label: "public, user, admin" },
+  { value: "3 layers", label: "public, user, admin" },
   { value: "4 guard", label: "auth, role, tier, feature" },
   { value: "httpOnly", label: "session-first auth" },
 ];
@@ -13,23 +13,23 @@ export function Header() {
     <header className="hero">
       <div className="hero__copy">
         <p className="eyebrow">Pehlione Membership Platform</p>
-        <h1>Modern frontend iskeleti, moduler ve production odakli.</h1>
+        <h1>Modern frontend scaffold, modular and production-focused.</h1>
         <p className="hero__lede">
-          Header, nav, main ve footer alanlari ayrildi. Public, user ve admin
-          alanlari icin buyumeye uygun bir giris katmani hazirlandi.
+          Header, nav, main and footer areas are separated. A scalable entry
+          layer for public, user and admin areas has been prepared.
         </p>
         <div className="hero__actions">
           <Link className="button button--primary" to="/pricing">
-            Planlari incele
+            View plans
           </Link>
           <Link className="button button--secondary" to="/analytics">
-            Guard akisini gor
+            See guard flow
           </Link>
         </div>
         <AuthStatusPanel />
       </div>
 
-      <div className="hero__panel" aria-label="Platform ozeti">
+      <div className="hero__panel" aria-label="Platform summary">
         <p className="hero__panel-title">Platform snapshot</p>
         <ul className="stat-grid">
           {stats.map((stat) => (

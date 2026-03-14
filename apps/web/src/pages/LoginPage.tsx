@@ -3,8 +3,7 @@ import { loginSchema, type LoginInput } from "@pehlione/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 import { loginMutation } from "../auth/auth.mutations";
 import { AuthFormShell } from "../components/forms/AuthFormShell";

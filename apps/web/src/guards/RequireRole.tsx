@@ -1,5 +1,5 @@
 import type { Role } from "@pehlione/shared";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 import { GuardNotice } from "../components/auth/GuardNotice";
@@ -11,8 +11,8 @@ export function RequireRole({ role }: { role: Role }) {
     return (
       <GuardNotice
         actionLabel="Role check"
-        title="Rol kontrolu yapiliyor."
-        description="Session verisi gelmeden admin route'lari resolve edilmiyor."
+        title="Checking role."
+        description="Admin routes are not resolved until session data is received."
       />
     );
   }
@@ -21,8 +21,8 @@ export function RequireRole({ role }: { role: Role }) {
     return (
       <GuardNotice
         actionLabel="Role check failed"
-        title="Rol bilgisi alinamadi."
-        description="API hatasi nedeniyle role guard karar veremedi."
+        title="Could not retrieve role information."
+        description="Role guard could not make a decision due to an API error."
       />
     );
   }
