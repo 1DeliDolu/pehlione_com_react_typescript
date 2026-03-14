@@ -13,9 +13,11 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "db:seed": "tsx --env-file=.env prisma/seed.ts"
   },
   "dependencies": {
+    "@pehlione/shared": "*",
     "@prisma/client": "^6.6.0",
     "argon2": "^0.44.0",
     "connect-redis": "^8.1.0",

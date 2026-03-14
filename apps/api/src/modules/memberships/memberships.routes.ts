@@ -17,14 +17,11 @@ const getMembershipController: RequestHandler = async (req, res, next) => {
 
 const getFeaturesController: RequestHandler = async (req, res, next) => {
   try {
-    const tier = req.session.membershipTier ?? "FREE";
+    const tier = req.session.membershipTier ?? "BRONZE";
     const entitlements = await getEntitlementsByTier(tier);
     const features = entitlements.map((e) => ({
-      featureKey: e.featureKey,
-      name: (e as Record<string, unknown> & { feature?: { name: string } })
-        .feature?.name,
-      limitValue: e.limitValue,
-      isEnabled: e.isEnabled,
+      feature: e.feature,
+      value: e.value,
     }));
     res.json({ success: true, data: features });
   } catch (err) {

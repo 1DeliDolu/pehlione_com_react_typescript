@@ -10,13 +10,12 @@ export async function getMembershipByUser(userId: string) {
 export async function getEntitlementsByTier(tier: string) {
   return prisma.featureEntitlement.findMany({
     where: { tier: tier as never },
-    include: { feature: true },
+    orderBy: { feature: "asc" },
   });
 }
 
 export async function getAllFeatureEntitlements() {
   return prisma.featureEntitlement.findMany({
-    include: { feature: true },
-    orderBy: [{ tier: "asc" }, { featureKey: "asc" }],
+    orderBy: [{ tier: "asc" }, { feature: "asc" }],
   });
 }

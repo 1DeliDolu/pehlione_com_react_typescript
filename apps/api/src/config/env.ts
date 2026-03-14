@@ -64,6 +64,8 @@ const envSchema = z.object({
   MAIL_SECURE: booleanFromString.default(false),
   MAIL_FROM_NAME: z.string().min(1),
   MAIL_FROM_ADDRESS: z.string().email(),
+  MAIL_USER: z.string().optional(),
+  MAIL_PASS: z.string().optional(),
 
   BCRYPT_SALT_ROUNDS: numberFromString(
     z.number().int().min(10).max(14),

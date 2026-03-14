@@ -113,8 +113,8 @@ export const auditLogsController: RequestHandler = async (req, res, next) => {
     const { data, total } = await findAuditLogs({
       page: query.page,
       limit: query.limit,
-      userId: query.userId,
-      action: query.action,
+      actorUserId: query.userId,
+      action: query.action as never,
     });
     res.json({
       success: true,
