@@ -217,6 +217,12 @@ select {
   gap: 10px;
 }
 
+.auth-status-copy {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
 .chip {
   min-height: 38px;
   padding: 0 14px;
@@ -285,6 +291,14 @@ select {
   backdrop-filter: blur(18px);
 }
 
+.route-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 .pill-list {
   display: flex;
   flex-wrap: wrap;
@@ -299,6 +313,98 @@ select {
   border-radius: 999px;
   background: rgba(201, 111, 45, 0.14);
   color: #5d2d0f;
+}
+
+.auth-form-shell {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow);
+}
+
+.auth-form-shell__intro h3,
+.form-message,
+.form-field,
+.session-card p,
+.session-card small {
+  margin: 0;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+}
+
+.form-field span,
+.kv-list dt {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.form-field input {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(16, 32, 51, 0.12);
+  border-radius: 16px;
+  background: #fffdf9;
+}
+
+.form-field small,
+.form-message--error {
+  color: #a03f14;
+}
+
+.form-message--success {
+  color: #21603a;
+}
+
+.kv-list {
+  display: grid;
+  gap: 14px;
+}
+
+.kv-list__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(16, 32, 51, 0.05);
+}
+
+.kv-list dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.session-list {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.session-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(16, 32, 51, 0.05);
 }
 
 .content-grid {
@@ -400,6 +506,12 @@ select {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .auth-form__grid,
+  .route-panel__header,
+  .session-card {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -424,6 +536,10 @@ select {
 
   .auth-switcher {
     align-items: flex-start;
+  }
+
+  .auth-status-copy {
+    justify-items: start;
   }
 
   .top-nav__links {
